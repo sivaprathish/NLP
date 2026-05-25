@@ -1,0 +1,360 @@
+# LAB-2 COMPLETE NLTK CODE
+
+import nltk
+from nltk.book import *
+from nltk import FreqDist
+
+# Download required package
+nltk.download('punkt_tab')
+
+# ---------------------------------------------------
+# 1. Generate Random Text
+# ---------------------------------------------------
+
+text3.generate()
+
+# ---------------------------------------------------
+# 2. Distinct Words in Genesis
+# ---------------------------------------------------
+
+print(sorted(set(text3)))
+
+print("Distinct Words:", len(set(text3)))
+
+# ---------------------------------------------------
+# 3. Lexical Richness
+# ---------------------------------------------------
+
+from __future__ import division
+
+print("Lexical Richness:")
+print(len(text3) / len(set(text3)))
+
+# ---------------------------------------------------
+# 4. Percentage of a Word
+# ---------------------------------------------------
+
+a = text3.count("smote")
+
+print("Count of smote:", a)
+
+print("Percentage:")
+print(100 * a / len(text3))
+
+# ---------------------------------------------------
+# 5. LOL Percentage in text5
+# ---------------------------------------------------
+
+lol_count = text5.count("lol")
+
+print("LOL Count:", lol_count)
+
+print("LOL Percentage:")
+print(100 * lol_count / len(text5))
+
+# ---------------------------------------------------
+# 6. Functions for Reuse
+# ---------------------------------------------------
+
+def lexical_diversity(text):
+    return len(text) / len(set(text))
+
+def percentage(count, total):
+    return 100 * count / total
+
+print(lexical_diversity(text3))
+
+print(percentage(4, 5))
+
+print(percentage(text4.count('a'), len(text4)))
+
+# ---------------------------------------------------
+# 7. Sentences as Lists
+# ---------------------------------------------------
+
+sent1 = ['Call', 'me', 'Ishmael', '.']
+
+print(len(sent1))
+print(lexical_diversity(sent1))
+
+sent2 = ['The', 'family', 'of', 'Dashwood',
+         'had', 'long', 'been', 'settled',
+         'in', 'Sussex', '.']
+
+print(len(sent2))
+print(lexical_diversity(sent2))
+
+sent3 = ['In', 'the', 'beginning', 'God',
+         'created', 'the', 'heaven',
+         'and', 'the', 'earth', '.']
+
+print(len(sent3))
+print(lexical_diversity(sent3))
+
+# ---------------------------------------------------
+# 8. Concatenation
+# ---------------------------------------------------
+
+print(sent1 + sent2)
+
+sent1.append("Some")
+
+print(sent1)
+
+# ---------------------------------------------------
+# 9. Indexing and Slicing
+# ---------------------------------------------------
+
+print(text4[173])
+
+print(text4.index('awaken'))
+
+print(text5[16715:16735])
+
+print(text6[1600:1625])
+
+sent = ['word1', 'word2', 'word3', 'word4',
+        'word5', 'word6', 'word7',
+        'word8', 'word9', 'word10']
+
+print(sent[0])
+
+print(sent[9])
+
+# ---------------------------------------------------
+# 10. Slicing Examples
+# ---------------------------------------------------
+
+print(sent[:3])
+
+print(text2[141525:])
+
+# ---------------------------------------------------
+# 11. Modifying Lists
+# ---------------------------------------------------
+
+sent[0] = 'First'
+
+sent[9] = 'Last'
+
+print(len(sent))
+
+sent[1:9] = ['Second', 'Third']
+
+print(sent)
+
+# ---------------------------------------------------
+# 12. Variables and Assignment
+# ---------------------------------------------------
+
+my_sent = ['Bravely', 'bold', 'Sir',
+           'Robin', ',', 'rode',
+           'forth', 'from', 'Camelot', '.']
+
+noun_phrase = my_sent[1:4]
+
+print(noun_phrase)
+
+wOrDs = sorted(noun_phrase)
+
+print(wOrDs)
+
+# ---------------------------------------------------
+# 13. String Operations
+# ---------------------------------------------------
+
+name = 'Monty'
+
+print(name[:4])
+
+print(name[0])
+
+print(name * 2)
+
+print(name + '!')
+
+print(' '.join(['Monty', 'Python']))
+
+print('Monty Python'.split())
+
+# ---------------------------------------------------
+# 14. Tokens Example
+# ---------------------------------------------------
+
+saying = ['After', 'all', 'is', 'said',
+          'and', 'done', 'more', 'is',
+          'said', 'than', 'done']
+
+tokens = set(saying)
+
+tokens = sorted(tokens)
+
+print(tokens[-2:])
+
+# ---------------------------------------------------
+# 15. Frequency Distribution
+# ---------------------------------------------------
+
+fdist1 = FreqDist(text1)
+
+vocabulary1 = list(fdist1.keys())
+
+print(vocabulary1[:50])
+
+print(fdist1['whale'])
+
+fdist1.plot(50, cumulative=True)
+
+# ---------------------------------------------------
+# 16. Hapaxes
+# ---------------------------------------------------
+
+print(fdist1.hapaxes())
+
+# ---------------------------------------------------
+# 17. Long Words
+# ---------------------------------------------------
+
+V = set(text1)
+
+long_words = [w for w in V if len(w) > 15]
+
+print(sorted(long_words))
+
+# ---------------------------------------------------
+# 18. Chat Corpus Words
+# ---------------------------------------------------
+
+fdist5 = FreqDist(text5)
+
+result = sorted([
+    w for w in set(text5)
+    if len(w) > 7 and fdist5[w] > 7
+])
+
+print(result)
+
+# ---------------------------------------------------
+# 19. Word Length Distribution
+# ---------------------------------------------------
+
+word_lengths = [len(w) for w in text1]
+
+fdist = FreqDist(word_lengths)
+
+print(fdist)
+
+fdist.plot()
+
+print(fdist.items())
+
+print(fdist.max())
+
+
+# NLP LAB QUESTIONS - NLTK CODE
+
+import nltk
+from nltk.book import *
+from nltk import FreqDist
+import matplotlib.pyplot as plt
+
+# ---------------------------------------------------
+# 1. Dispersion Plot - Sense and Sensibility
+# ---------------------------------------------------
+
+text2.dispersion_plot(
+    ["Elinor", "Marianne", "Edward", "Willoughby"]
+)
+
+# Observation:
+# Elinor and Marianne appear throughout the novel.
+# Edward is closely associated with Elinor.
+# Willoughby is mostly associated with Marianne.
+
+# ---------------------------------------------------
+# 2. Words in Chat Corpus starting with 'b'
+# ---------------------------------------------------
+
+words_b = sorted(set(
+    word for word in text5
+    if word.lower().startswith('b')
+))
+
+print(words_b)
+
+# ---------------------------------------------------
+# 3. Difference Between Two Statements
+# ---------------------------------------------------
+
+# Statement 1
+a = sorted(set(w.lower() for w in text1))
+
+# Statement 2
+b = sorted(w.lower() for w in set(text1))
+
+print("Length of Statement 1:", len(a))
+print("Length of Statement 2:", len(b))
+
+# Explanation:
+# Statement 1 converts all words to lowercase BEFORE removing duplicates.
+# Statement 2 removes duplicates BEFORE lowercase conversion.
+# Statement 2 usually gives a larger value.
+
+# ---------------------------------------------------
+# 4. Four-letter Words in text5
+# ---------------------------------------------------
+
+four_letter_words = [
+    w.lower()
+    for w in text5
+    if len(w) == 4 and w.isalpha()
+]
+
+fdist = FreqDist(four_letter_words)
+
+print(fdist.most_common())
+
+# Plot
+fdist.plot(50)
+
+# ---------------------------------------------------
+# 5. Function vocab_size(text)
+# ---------------------------------------------------
+
+def vocab_size(text):
+    return len(set(text))
+
+print("Vocabulary Size of text1:", vocab_size(text1))
+
+# ---------------------------------------------------
+# 6. Frequency Distribution of text6
+# ---------------------------------------------------
+
+fdist6 = FreqDist(text6)
+
+print(fdist6)
+
+# Plot frequency distribution
+fdist6.plot(50)
+
+# ---------------------------------------------------
+# 7. Seven-letter Words in text6
+# ---------------------------------------------------
+
+seven_letter_words = sorted(set(
+    w.lower()
+    for w in text6
+    if len(w) == 7 and w.isalpha()
+))
+
+print(seven_letter_words)
+
+# Frequency Distribution
+fdist7 = FreqDist(seven_letter_words)
+
+# Plot
+fdist7.plot(50)
+
+print(fdist[3])
+
+print(fdist.freq(3))
