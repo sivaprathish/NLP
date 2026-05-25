@@ -1,0 +1,201 @@
+import nltk
+from nltk.corpus import brown, gutenberg, names, state_union, webtext
+from nltk.corpus import wordnet as wn
+from nltk import FreqDist
+import matplotlib.pyplot as plt
+
+# Download required datasets
+nltk.download('gutenberg')
+nltk.download('brown')
+nltk.download('webtext')
+nltk.download('state_union')
+nltk.download('wordnet')
+nltk.download('names')
+
+# ---------------------------------------------------
+# 1. Phrase Operations
+# ---------------------------------------------------
+
+phrase = ['hello', 'natural', 'language', 'processing']
+
+phrase.append('python')
+
+print("Addition:")
+print(phrase + phrase)
+
+print("\nMultiplication:")
+print(phrase * 3)
+
+print("\nIndexing:")
+print(phrase[0])
+
+print("\nSlicing:")
+print(phrase[1:])
+
+print("\nSorted:")
+print(sorted(phrase))
+
+# ---------------------------------------------------
+# 2. Austen Persuasion Corpus
+# ---------------------------------------------------
+
+persuasion = gutenberg.words('austen-persuasion.txt')
+
+tokens = len([word for word in persuasion if word.isalpha()])
+types = len(set(word.lower() for word in persuasion if word.isalpha()))
+
+print("\nTotal Tokens:", tokens)
+print("Total Types:", types)
+
+# ---------------------------------------------------
+# 3. Brown and Webtext Corpus
+# ---------------------------------------------------
+
+print("\nBrown Corpus Sample:")
+print(brown.words(categories='news')[:20])
+
+print("\nWebtext Corpus Sample:")
+print(webtext.words()[:20])
+
+# ---------------------------------------------------
+# 4. State Union Analysis
+# ---------------------------------------------------
+
+cfd = nltk.ConditionalFreqDist(
+    (target, fileid[:4])
+    for fileid in state_union.fileids()
+    for w in state_union.words(fileid)
+    for target in ['men', 'women', 'people']
+    if w.lower().startswith(target)
+)
+
+cfd.plot()
+
+# ---------------------------------------------------
+# 5. WordNet Holonym and Meronym
+# ---------------------------------------------------
+
+computer = wn.synset('computer.n.01')
+
+print("\nComputer Part Meronyms:")
+print(computer.part_meronyms())
+
+print("\nComputer Part Holonyms:")
+print(computer.part_holonyms())
+
+# ---------------------------------------------------
+# 6. Names Corpus Initial Letters
+# ---------------------------------------------------
+
+cfd = nltk.ConditionalFreqDist(
+    (fileid, name[0])
+    for fileid in names.fileids()
+    for name in names.words(fileid)
+)
+
+cfd.plot()
+
+# ---------------------------------------------------
+# 7. Vocabulary Richness
+# ---------------------------------------------------
+
+news_text = brown.words(categories='news')
+romance_text = brown.words(categories='romance')
+
+print("\nVocabulary of News:", len(set(news_text)))
+print("Vocabulary of Romance:", len(set(romance_text)))
+
+print("\nVocabulary Richness of News:",
+      len(set(news_text)) / len(news_text))
+
+print("Vocabulary Richness of Romance:",
+      len(set(romance_text)) / len(romance_text))
+
+# ---------------------------------------------------
+# 8. Modal Distribution
+# ---------------------------------------------------
+
+modals = ['can', 'could', 'may', 'might', 'must', 'will']
+
+cfd = nltk.ConditionalFreqDist(
+    (genre, word.lower())
+    for genre in brown.categories()
+    for word in brown.words(categories=genre)
+)
+
+genres = ['news', 'religion', 'hobbies',
+          'science_fiction', 'romance', 'humor']
+
+cfd.tabulate(conditions=genres, samples=modals)
+
+# ---------------------------------------------------
+# 9. CMU Pronouncing Dictionary
+# ---------------------------------------------------
+
+nltk.download('cmudict')
+
+prondict = nltk.corpus.cmudict.dict()
+
+print("\nDistinct Words:", len(prondict))
+
+multiple_pron = 0
+
+for word in prondict:
+    if len(prondict[word]) > 1:
+        multiple_pron += 1
+
+print("Fraction with multiple pronunciations:",
+      multiple_pron / len(prondict))
+
+# ---------------------------------------------------
+# 10. Words Occurring At Least 3 Times
+# ---------------------------------------------------
+
+fdist = FreqDist(
+    w.lower()
+    for w in brown.words()
+    if w.isalpha()
+)
+
+word_set = []
+
+for sample in fdist:
+    if fdist[sample] >= 3:
+        word_set.append(sample)
+
+print("\nWords occurring at least 3 times:")
+print(word_set[:100])
+
+# ---------------------------------------------------
+# 11. Zipf's Law
+# ---------------------------------------------------
+
+def zipf_law(text):
+
+    fdist = FreqDist(
+        [w.lower() for w in text if w.isalpha()]
+    )
+
+    fdist = fdist.most_common()
+
+    rank = []
+    freq = []
+
+    n = 1
+
+    for item in fdist:
+        freq.append(item[1])
+        rank.append(n)
+        n += 1
+
+    plt.plot(rank, freq, 'bs')
+
+    plt.xscale('log')
+
+    plt.title("Zipf's Law")
+    plt.xlabel("Word Rank")
+    plt.ylabel("Word Frequency")
+
+    plt.show()
+
+zipf_law(brown.words())
