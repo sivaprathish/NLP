@@ -1,0 +1,69 @@
+# NLP LAB PROGRAMS
+
+import nltk
+from nltk.book import *
+from nltk import FreqDist
+
+# ---------------------------------------------------
+# 1. Define my_sent
+# ---------------------------------------------------
+
+my_sent = ["Knowledge", "is", "power"]
+
+# a) Convert list into string
+sentence = ' '.join(my_sent)
+
+print("String Form:")
+print(sentence)
+
+# b) Convert string back into list
+word_list = sentence.split()
+
+print("\nList Form:")
+print(word_list)
+
+# ---------------------------------------------------
+# 2. Dispersion Plot - Sense and Sensibility
+# ---------------------------------------------------
+
+text2.dispersion_plot(
+    ["Elinor", "Marianne", "Edward", "Willoughby"]
+)
+
+# Observation:
+# Elinor is closely associated with Edward.
+# Marianne is closely associated with Willoughby.
+# Female characters appear more frequently.
+
+# ---------------------------------------------------
+# 3. Four-letter Words in text5
+# ---------------------------------------------------
+
+four_letter_words = sorted(set(
+    word.lower()
+    for word in text5
+    if len(word) == 4 and word.isalpha()
+))
+
+print("\nFour-letter Words:")
+print(four_letter_words)
+
+# ---------------------------------------------------
+# 4. Function percent(word, text)
+# ---------------------------------------------------
+
+def percent(word, text):
+    return 100 * text.count(word) / len(text)
+
+print("\nPercentage of 'lol' in text5:")
+print(percent('lol', text5))
+
+# ---------------------------------------------------
+# 5. Function vocab_size(text)
+# ---------------------------------------------------
+
+def vocab_size(text):
+    return len(set(text))
+
+print("\nVocabulary Size of text1:")
+print(vocab_size(text1))
